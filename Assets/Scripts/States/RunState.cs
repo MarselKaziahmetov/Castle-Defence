@@ -1,6 +1,3 @@
-#define Mobile
-#undef PC
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,14 +24,7 @@ public class RunState: State
         base.Update();
         Debug.Log("Бегу");
 
-#if (Mobile)
-        JoystickRunLogic();
-#endif
-
-#if (PC)
-        PCRunLogic();
-#endif
-
+        RunLogic();
     }
 
     public override void Exit()
@@ -43,7 +33,7 @@ public class RunState: State
         Debug.Log("Добежал");
     }
 
-    void PCRunLogic()
+    void RunLogic()
     {
         Vector3 directionVector = new Vector3(-_player.hAxes, 0, -_player.vAxes);
 
@@ -53,16 +43,6 @@ public class RunState: State
         }
 
         _player.rb.velocity = Vector3.ClampMagnitude(directionVector, 1) * _player.movementSpeed;
-    }
-
-    void JoystickRunLogic()
-    {
-        _player.rb.velocity = new Vector3(-_player.joystick.Horizontal * _player.movementSpeed, _player.rb.velocity.y, -_player.joystick.Vertical * _player.movementSpeed);
-
-        if (_player.joystick.Horizontal != 0 || _player.joystick.Vertical != 0)
-        {
-            _player.transform.rotation = Quaternion.LookRotation(_player.rb.velocity);
-        }
     }
 
     void RunningAnimation()

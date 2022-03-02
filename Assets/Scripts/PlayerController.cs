@@ -1,6 +1,3 @@
-#define Mobile
-#undef PC
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +14,6 @@ public class PlayerController : MonoBehaviour
 
     public Animator animator;
     public Rigidbody rb;
-    public FixedJoystick joystick;
 
     public float rotationSpeed = 10;
     public float movementSpeed = 4;
@@ -41,18 +37,6 @@ public class PlayerController : MonoBehaviour
     {
         stateMachine.CurrentState.Update();
 
-#if(Mobile)
-        if ((joystick.Horizontal != 0 || joystick.Vertical != 0) && (stateMachine.CurrentState != runState))
-        {
-            stateMachine.ChangeState(runState);
-        }
-        if ((joystick.Horizontal == 0 || joystick.Vertical == 0) && (stateMachine.CurrentState != idleState))
-        {
-            stateMachine.ChangeState(idleState);
-        }
-#endif
-
-#if(PC)
         hAxes = Input.GetAxis("Horizontal");
         vAxes = Input.GetAxis("Vertical");
 
@@ -65,7 +49,6 @@ public class PlayerController : MonoBehaviour
         {
                 stateMachine.ChangeState(idleState);
         }
-#endif
 
         if (Input.GetKeyDown(KeyCode.U))
         {
