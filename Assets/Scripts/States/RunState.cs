@@ -24,7 +24,7 @@ public class RunState: State
         base.Update();
         Debug.Log("Бегу");
 
-        RunLogic();
+        NewRunLogic();
     }
 
     public override void Exit()
@@ -43,6 +43,26 @@ public class RunState: State
         }
 
         _player.rb.velocity = Vector3.ClampMagnitude(directionVector, 1) * _player.movementSpeed;
+    }
+
+    void NewRunLogic()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        
+        if (Physics.Raycast(ray, out hit, 100))
+        {
+            _player.targetToMove = hit.transform;
+            _player.navMeshAgent.isStopped = false;
+            _player.isRunning = true;
+            _player.navMeshAgent.destination = hit.point;
+
+            if (!Input.GetMouseButton(1))
+            {
+                _player.isRunning = false;
+                _player.navMeshAgent.isStopped = true;
+            }
+        }
     }
 
     void RunningAnimation()

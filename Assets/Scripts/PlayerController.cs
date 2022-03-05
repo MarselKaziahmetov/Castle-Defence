@@ -1,24 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 /*Главный скрипт,который висит на объекте Player(персонаже игрока)*/
 
 public class PlayerController : MonoBehaviour
 {
-    public StateMachine stateMachine;
+    private StateMachine stateMachine;
 
-    public IdleState idleState;
-    public RunState runState;
-    public DeathState deathState;
+    private IdleState idleState;
+    private RunState runState;
+    private DeathState deathState;
 
-    public Animator animator;
-    public Rigidbody rb;
-
+    [Header("Variables")]
     public float rotationSpeed = 10;
     public float movementSpeed = 4;
+
+    [HideInInspector] public Animator animator;
+    [HideInInspector] public NavMeshAgent navMeshAgent;
+    [HideInInspector] public Rigidbody rb;
+    [HideInInspector] public Transform targetToMove;
+
     [HideInInspector] public float hAxes;
     [HideInInspector] public float vAxes;
+    [HideInInspector] public bool isRunning = false;
 
     void Start()
     {
@@ -31,6 +37,7 @@ public class PlayerController : MonoBehaviour
 
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
     private void FixedUpdate()
@@ -40,15 +47,26 @@ public class PlayerController : MonoBehaviour
         hAxes = Input.GetAxis("Horizontal");
         vAxes = Input.GetAxis("Vertical");
 
-        if ((hAxes != 0 || vAxes != 0) && (stateMachine.CurrentState != runState))
+        if (Input.GetMouseButton(1) && (stateMachine.CurrentState != runState))
         {
             stateMachine.ChangeState(runState);
         }
-        
-        if ((hAxes == 0 && vAxes == 0) && (stateMachine.CurrentState != idleState))
+
+        if (!Input.GetMouseButton(1) && !isRunning && (stateMachine.CurrentState != idleState))
         {
-                stateMachine.ChangeState(idleState);
+            stateMachine.ChangeState(idleState);
         }
+
+        /*if ((hAxes != 0 || vAxes != 0) && (stateMachine.CurrentState != runState))
+        {
+            stateMachine.ChangeState(runState);
+        }*/
+
+        /*if ((hAxes == 0 && vAxes == 0) && (stateMachine.CurrentState != idleState))
+        {
+            stateMachine.ChangeState(idleState);
+        }*/
+
 
         if (Input.GetKeyDown(KeyCode.U))
         {

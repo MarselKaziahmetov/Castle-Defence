@@ -9,7 +9,7 @@ public class ProjectilesSpanwer : MonoBehaviour
     public float timeToReload;
     private float startTimeToReload;
     
-    void Update()
+    void FixedUpdate()
     {
         if (startTimeToReload <=0)
         {
