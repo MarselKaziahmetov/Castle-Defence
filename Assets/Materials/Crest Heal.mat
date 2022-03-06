@@ -10,7 +10,7 @@ Material:
   m_Name: Crest Heal
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _EMISSION
-  m_LightmapFlags: 1
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -74,5 +74,5 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 0.088679194, g: 1, b: 0.10615556, a: 1}
-    - _EmissionColor: {r: 0.1441285, g: 0.60382754, b: 0.18447503, a: 1}
+    - _EmissionColor: {r: 0.27203166, g: 0.99215686, b: 0.05490193, a: 1}
   m_BuildTextureStacks: []

@@ -10,9 +10,21 @@ public class CameraFollowing : MonoBehaviour
     public Vector3 offset;
     public float cameraSpeed;
 
+    public float zoomSpeed;
+    public float maxZoom;
+    public float minZoom;
+
+    private float currentZoom;
+
+    private void Update()
+    {
+        currentZoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
+        currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
+    }
+
     void FixedUpdate()
     {
-        Vector3 newCameraPosition = objectToFollowing.transform.position + offset;
+        Vector3 newCameraPosition = objectToFollowing.transform.position + offset * currentZoom;
         transform.position = Vector3.Lerp(transform.position, newCameraPosition, cameraSpeed * Time.deltaTime);
     }
 }

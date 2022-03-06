@@ -50,7 +50,7 @@ public class RunState: State
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         
-        if (Physics.Raycast(ray, out hit, 100))
+        if (Physics.Raycast(ray, out hit))
         {
             _player.targetToMove = hit.transform;
             _player.navMeshAgent.isStopped = false;
