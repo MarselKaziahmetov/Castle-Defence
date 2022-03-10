@@ -44,9 +44,6 @@ public class PlayerController : MonoBehaviour
     {
         stateMachine.CurrentState.Update();
 
-        hAxes = Input.GetAxis("Horizontal");
-        vAxes = Input.GetAxis("Vertical");
-
         if (Input.GetMouseButton(1) && (stateMachine.CurrentState != runState))
         {
             stateMachine.ChangeState(runState);
@@ -56,17 +53,6 @@ public class PlayerController : MonoBehaviour
         {
             stateMachine.ChangeState(idleState);
         }
-
-        /*if ((hAxes != 0 || vAxes != 0) && (stateMachine.CurrentState != runState))
-        {
-            stateMachine.ChangeState(runState);
-        }*/
-
-        /*if ((hAxes == 0 && vAxes == 0) && (stateMachine.CurrentState != idleState))
-        {
-            stateMachine.ChangeState(idleState);
-        }*/
-
 
         if (Input.GetKeyDown(KeyCode.U))
         {

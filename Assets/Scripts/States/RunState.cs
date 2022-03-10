@@ -33,18 +33,6 @@ public class RunState: State
         Debug.Log("Добежал");
     }
 
-    void RunLogic()
-    {
-        Vector3 directionVector = new Vector3(-_player.hAxes, 0, -_player.vAxes);
-
-        if (directionVector.magnitude != 0)
-        {
-            _player.transform.rotation = Quaternion.Lerp(_player.transform.rotation, Quaternion.LookRotation(directionVector), Time.deltaTime * _player.rotationSpeed);
-        }
-
-        _player.rb.velocity = Vector3.ClampMagnitude(directionVector, 1) * _player.movementSpeed;
-    }
-
     void NewRunLogic()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

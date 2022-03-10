@@ -14,7 +14,7 @@ public class CameraFollowing : MonoBehaviour
     public float maxZoom;
     public float minZoom;
 
-    private float currentZoom;
+    private float currentZoom = 1f;
 
     private void Update()
     {

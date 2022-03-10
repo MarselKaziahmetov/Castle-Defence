@@ -17,6 +17,11 @@ public class ProjectileStarter : MonoBehaviour
         transform.Translate(Vector3.forward * moveSpeed/100);
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        Destroy(gameObject);
+    }
+
     void DestroyProjectile()
     {
         Destroy(gameObject);
