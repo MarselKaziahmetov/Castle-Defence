@@ -7,11 +7,11 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
-    private StateMachine stateMachine;
+    public StateMachine stateMachine;
 
     private IdleState idleState;
     private RunState runState;
-    private DeathState deathState;
+    public DeathState deathState;
 
     [Header("Variables")]
     public float rotationSpeed = 10;
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     {
         idleState = new IdleState(this);
         runState = new RunState(this);
-        deathState = new DeathState();
+        deathState = new DeathState(this);
 
         stateMachine = new StateMachine();
         stateMachine.Initialize(idleState);
@@ -44,12 +44,15 @@ public class PlayerController : MonoBehaviour
     {
         stateMachine.CurrentState.Update();
 
-        if (Input.GetMouseButton(1) && (stateMachine.CurrentState != runState))
+        hAxes = Input.GetAxis("Horizontal");
+        vAxes = Input.GetAxis("Vertical");
+
+        if ((hAxes != 0 || vAxes != 0) && (stateMachine.CurrentState != runState))
         {
             stateMachine.ChangeState(runState);
         }
 
-        if (!Input.GetMouseButton(1) && !isRunning && (stateMachine.CurrentState != idleState))
+        if ((hAxes == 0 && vAxes == 0) && (stateMachine.CurrentState != idleState))
         {
             stateMachine.ChangeState(idleState);
         }

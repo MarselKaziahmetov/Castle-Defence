@@ -4,27 +4,28 @@ using UnityEngine;
 
 public class DeathState: State 
 {
-/*    private PlayerController player;
+    private PlayerController _player;
     public DeathState(PlayerController playerController)
     {
-        player = playerController;
-    }*/
+        _player = playerController;
+    }
 
     public override void Enter()
     {
         base.Enter();
+        DeathAnimation();
         Debug.Log("ўас умру");
     }
-
-/*    public override void Update()
-    {
-        base.Update();
-        Debug.Log("”мираю");
-    }*/
 
     public override void Exit()
     {
         base.Exit();
         Debug.Log("«дох");
+    }
+
+    void DeathAnimation()
+    {
+        _player.animator.StopPlayback();
+        _player.animator.CrossFade("death", 0.1f);
     }
 }
