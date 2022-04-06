@@ -2,27 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleState: State
+public class IdleStateMob: State
 {
-    private PlayerController _player;
+    private MobController _mob;
 
-    public IdleState(PlayerController playerController)
+    public IdleStateMob(MobController mobController)
     {
-        _player = playerController;
+        _mob = mobController;
     }
-
     public override void Enter()
     {
         base.Enter();
         Debug.Log("Вошел в идле");
 
-        _player.animator.StopPlayback();
-        _player.animator.CrossFade("idle", 0.5f);
+        IdleAnimation();
     }
 
     public override void Exit()
     {
         base.Exit();
         Debug.Log("Вышел из идле");
+    }
+
+    void IdleAnimation()
+    {
+        _mob.animator.StopPlayback();
+        _mob.animator.CrossFade("idle", 0.5f);
     }
 }

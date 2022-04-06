@@ -1,25 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-/*Главный скрипт,который висит на объекте Player(персонаже игрока)*/
-
-public class PlayerController : MonoBehaviour
+public class MobController : MonoBehaviour
 {
-    public StateMachinePlayer stateMachine;
+    public StateMachineMob stateMachine;
 
-    private IdleState idleState;
-    private RunState runState;
-    private DeathState deathState;
+    private IdleStateMob idleState;
+    private RunStateMob runState;
+    private DeathStateMob deathState;
 
     private HealthSystem health;
 
     [Header("Variables")]
     public float rotationSpeed = 10;
     public float movementSpeed = 4;
-
-    public ParticleSystem particles;
 
     [HideInInspector] public Animator animator;
     [HideInInspector] public Rigidbody rb;
@@ -30,18 +25,16 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        idleState = new IdleState(this);
-        runState = new RunState(this);
-        deathState = new DeathState(this);
+        idleState = new IdleStateMob(this);
+        runState = new RunStateMob(this);
+        deathState = new DeathStateMob(this);
 
-        stateMachine = new StateMachinePlayer();
+        stateMachine = new StateMachineMob();
         stateMachine.Initialize(idleState);
 
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         health = GetComponent<HealthSystem>();
-
-        particles.Stop();
     }
 
     private void FixedUpdate()
@@ -71,6 +64,5 @@ public class PlayerController : MonoBehaviour
     public void Destroyer(float delay)
     {
         Destroy(gameObject, delay);
-        particles.Play();
     }
 }

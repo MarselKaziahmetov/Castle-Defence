@@ -5,6 +5,7 @@ using UnityEngine;
 public class DeathState: State 
 {
     private PlayerController _player;
+
     public DeathState(PlayerController playerController)
     {
         _player = playerController;
@@ -14,6 +15,7 @@ public class DeathState: State
     {
         base.Enter();
         DeathAnimation();
+
         Debug.Log("Щас умру");
     }
 

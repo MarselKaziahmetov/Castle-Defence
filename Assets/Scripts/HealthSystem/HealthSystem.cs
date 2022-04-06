@@ -19,13 +19,7 @@ public class HealthSystem : MonoBehaviour
     public void TakeDamage(int damagePoints)
     {
         currentHealth -= damagePoints;
-
-        if (currentHealth <= 0)
-        {
-            Destroy(gameObject, 1f);
-            DeathAnimation();
-        }
-    }
+    } 
 
     public void TakeHeal(int healPoints)
     {
@@ -35,11 +29,5 @@ public class HealthSystem : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
-    }
-
-    void DeathAnimation()
-    {
-        player.animator.StopPlayback();
-        player.animator.CrossFade("death", 0.1f);
     }
 }
