@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class DeathStateMob: State 
 {
-    private MobController _mob;
+    private MobControll _mob;
 
-    public DeathStateMob(MobController mobController)
+    public DeathStateMob(MobControll mobControll)
     {
-        _mob = mobController;
+        _mob = mobControll;
     }
-
     public override void Enter()
     {
         base.Enter();

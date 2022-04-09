@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class IdleStateMob: State
 {
-    private MobController _mob;
+    private MobControll _mob;
 
-    public IdleStateMob(MobController mobController)
+    public IdleStateMob(MobControll mobControll)
     {
-        _mob = mobController;
+        _mob = mobControll;
     }
     public override void Enter()
     {

@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class MobController : MonoBehaviour
 {
     public StateMachineMob stateMachine;
@@ -12,44 +14,45 @@ public class MobController : MonoBehaviour
 
     private HealthSystem health;
 
-    [Header("Variables")]
-    public float rotationSpeed = 10;
-    public float movementSpeed = 4;
-
     [HideInInspector] public Animator animator;
     [HideInInspector] public Rigidbody rb;
 
-    [HideInInspector] public float hAxes;
-    [HideInInspector] public float vAxes;
-    [HideInInspector] public bool isRunning = false;
+    [Header("Variables")]
+    [Range(0, 360)] public float ViewAngle = 90f;
+    public float rotationSpeed = 10;
+    public float ViewDistance = 15f;
+    public float DetectionDistance = 3f;
+
+    public Transform EnemyEye;
+    public Transform Target;
+    private NavMeshAgent agent;
+    private Transform agentTransform;
 
     void Start()
     {
-        idleState = new IdleStateMob(this);
+        /*        idleState = new IdleStateMob(this);
         runState = new RunStateMob(this);
         deathState = new DeathStateMob(this);
 
         stateMachine = new StateMachineMob();
-        stateMachine.Initialize(idleState);
+        stateMachine.Initialize(idleState);*/
 
-        animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody>();
-        health = GetComponent<HealthSystem>();
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
+        rotationSpeed = agent.angularSpeed;
+        agentTransform = agent.transform;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         stateMachine.CurrentState.Update();
 
-        hAxes = Input.GetAxis("Horizontal");
-        vAxes = Input.GetAxis("Vertical");
-
-        if ((hAxes != 0 || vAxes != 0) && (stateMachine.CurrentState != runState) && (stateMachine.CurrentState != deathState))
+        if ((stateMachine.CurrentState != runState) && (stateMachine.CurrentState != deathState))
         {
             stateMachine.ChangeState(runState);
         }
 
-        if ((hAxes == 0 && vAxes == 0) && (stateMachine.CurrentState != idleState) && (stateMachine.CurrentState != deathState))
+        if ((stateMachine.CurrentState != idleState) && (stateMachine.CurrentState != deathState))
         {
             stateMachine.ChangeState(idleState);
         }

@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     public float rotationSpeed = 10;
     public float movementSpeed = 4;
 
-    public ParticleSystem particles;
+    public ParticleSystem deathParticles;
 
     [HideInInspector] public Animator animator;
     [HideInInspector] public Rigidbody rb;
@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         health = GetComponent<HealthSystem>();
 
-        particles.Stop();
+        deathParticles.Stop();
     }
 
     private void FixedUpdate()
@@ -71,6 +71,6 @@ public class PlayerController : MonoBehaviour
     public void Destroyer(float delay)
     {
         Destroy(gameObject, delay);
-        particles.Play();
+        deathParticles.Play();
     }
 }
