@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 /*Главный скрипт,который висит на объекте Player(персонаже игрока)*/
 
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public float rotationSpeed = 10;
     public float movementSpeed = 4;
 
+    public Slider sliderHP;
     public ParticleSystem deathParticles;
 
     [HideInInspector] public Animator animator;
@@ -27,6 +29,8 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public float hAxes;
     [HideInInspector] public float vAxes;
     [HideInInspector] public bool isRunning = false;
+    [HideInInspector] private float currentHealthTemp;
+
 
     void Start()
     {
@@ -44,7 +48,7 @@ public class PlayerController : MonoBehaviour
         deathParticles.Stop();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         stateMachine.CurrentState.Update();
 
@@ -66,11 +70,22 @@ public class PlayerController : MonoBehaviour
             stateMachine.ChangeState(deathState);
             Destroyer(5f);
         }
+
+        HPBarController();
     }
 
     public void Destroyer(float delay)
     {
         Destroy(gameObject, delay);
         deathParticles.Play();
+    }
+
+    public void HPBarController()
+    {
+        if (health.currentHealth != currentHealthTemp)
+        {
+            sliderHP.value = health.maxHealth / 100 * health.currentHealth;
+            currentHealthTemp = health.currentHealth;
+        }
     }
 }
